@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private float HEIGHT;
+    [SerializeField] private float WIDTH;
+    [SerializeField] private float FORCE_FIELD;
     [SerializeField] private float SPEED = 1.5f;
     [SerializeField] private float FRIC_COEFF = 0.92f;
     [SerializeField] private float BULLET_COOLDOWN = 1f;
@@ -23,10 +26,14 @@ public class Player : MonoBehaviour
     }
     void Update() 
     {
-        playerInput();
         playerShoot();
         playerShobHead();
         kawaiiEye();
+    }
+
+    void FixedUpdate() {
+        playerInput();
+        limit_to_field();
     }
 
     void playerInput() 
@@ -78,5 +85,13 @@ public class Player : MonoBehaviour
 
         shobHead.transform.position = new Vector3(SHOB_HEAD_RADIUS*Mathf.Cos(angle), SHOB_HEAD_RADIUS*Mathf.Sin(angle), 0) + transform.position;
         shobHead.rotation = Quaternion.Euler(0, 0, angle*Mathf.Rad2Deg);
+    }
+
+    void limit_to_field() {
+        if (Mathf.Abs(this.transform.position.x) > WIDTH || Mathf.Abs(this.transform.position.y) > HEIGHT) {
+            Vector2 central_force = - this.transform.position.normalized;
+            central_force *= FORCE_FIELD;
+            rb.velocity += central_force * Time.fixedDeltaTime;
+        }
     }
 }

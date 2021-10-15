@@ -99,7 +99,7 @@ MonoBehaviour:
   BULLET_SPEED: 35
   DEATH_TIME: 2
   effectPrefab: {fileID: 7894816227598741678, guid: b86374d19771ba14e86f9af468f4ef03, type: 3}
-  damage: 5
+  damage: 50
 --- !u!61 &5662036445500044530
 BoxCollider2D:
   m_ObjectHideFlags: 0

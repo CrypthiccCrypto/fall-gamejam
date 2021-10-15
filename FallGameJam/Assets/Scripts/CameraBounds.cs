@@ -2,39 +2,17 @@ using UnityEngine;
 
 public class CameraBounds : MonoBehaviour
 {
-    [SerializeField] private int width;
-    [SerializeField] private float aspect_ratio;
-    [SerializeField] private Rigidbody2D player;
-    private Vector3 offset;
-    private int height;
-    private bool isInside = true;
+    [SerializeField] private Transform player;
+    [SerializeField] private float smoothFactor;
+    public Vector3 offset;
 
-    void Start() {
-        float tmp = aspect_ratio * width;
-        height = (int)tmp;
-
-        transform.localScale = new Vector3(width, height, 1);
-    }
-    void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "Player") {
-            isInside = true;
-        }
-    }
-    void OnTriggerExit2D(Collider2D other) {
-        if(other.gameObject.tag == "Player") {
-            isInside = false;
-        }
-    }
-
-    void Update() {
+    void FixedUpdate() {
         moveCam();
     }
 
     void moveCam() {
-        if(!isInside) {
-            Vector2 tmp = (Vector2) transform.position;
-            tmp += player.velocity * Time.deltaTime;
-            transform.position = new Vector3(tmp.x, tmp.y, -1);
-        }
+        Vector3 targetPosition = player.position + offset;
+        Vector3 smoothPosition = Vector3.Lerp(transform.position, targetPosition, smoothFactor*Time.fixedDeltaTime);
+        transform.position = smoothPosition;
     }
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyDeath
   m_EditorClassIdentifier: 
   shakeType: 0
-  strength: 4
-  roughness: 4
+  strength: 2
+  roughness: 1
   fadeIn: 0.1
   fadeOut: 0.3
-  positionInfluence: {x: 0.5, y: 0.5, z: 0}
+  positionInfluence: {x: 0.25, y: 0.1, z: 0}
   rotationInfluence: {x: 0, y: 0, z: 0}
