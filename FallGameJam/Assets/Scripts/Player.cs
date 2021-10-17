@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject damageParticleEffectPrefab;
     [SerializeField] private AudioManager bulletAudioManager;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private GameObject gameOver;
+
     private Rigidbody2D rb;
     private CircleCollider2D cd;
     private SpriteRenderer sprite;
@@ -39,6 +41,9 @@ public class Player : MonoBehaviour
 
     void Start() 
     {
+        Time.timeScale = 1;
+        gameOver.SetActive(false);
+        
         rb = GetComponent<Rigidbody2D>();
         cd = GetComponent<CircleCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -181,6 +186,7 @@ public class Player : MonoBehaviour
             Instantiate(damageParticleEffectPrefab, this.transform.position, Quaternion.identity);
             audioManager.playAudio(3, 0.2f);
             
+            gameOver.SetActive(true);
             Destroy(gameObject);
         }
     }

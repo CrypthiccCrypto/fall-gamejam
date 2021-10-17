@@ -39,10 +39,18 @@ public class Enemy : MonoBehaviour
     }
 
     void Update() {
+        checkPlayerDeath();
         aim();
         move();
         setColor();
         checkDeath();
+    }   
+
+    void checkPlayerDeath() {
+        if(player == null) {
+            this.health = -1;
+            checkDeath();
+        }
     }
 
     void aim() {
