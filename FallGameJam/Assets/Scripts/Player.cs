@@ -58,7 +58,8 @@ public class Player : MonoBehaviour
         playerInput();
         limit_to_field();
     }
-    void OnCollisionEnter2D(Collision2D other) {
+
+    void OnCollisionStay2D(Collision2D other) {
         if(other.gameObject.tag == "Enemy" && !isInvinicble) {
             isInvinicble = true;
 
@@ -82,6 +83,7 @@ public class Player : MonoBehaviour
             StartCoroutine(invincibility());
         }
     }
+
     IEnumerator invincibility() {
         Instantiate(damageParticleEffectPrefab, this.transform.position, Quaternion.identity);
         audioManager.playAudio(2, 0.2f);
@@ -178,7 +180,8 @@ public class Player : MonoBehaviour
             Time.timeScale = 0.5f;
             Instantiate(damageParticleEffectPrefab, this.transform.position, Quaternion.identity);
             audioManager.playAudio(3, 0.2f);
-            gameObject.SetActive(false);
+            
+            Destroy(gameObject);
         }
     }
 }
