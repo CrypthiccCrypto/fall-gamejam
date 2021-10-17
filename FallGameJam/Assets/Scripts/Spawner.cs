@@ -3,6 +3,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject basicEnemyPrefab;
+    [SerializeField] GameObject splitEnemyPrefab;
     [SerializeField] Transform goPro;
     [SerializeField] private float CAMERA_THICKNESS;
     [SerializeField] private float CAMERA_TALLNESS;
@@ -29,6 +30,10 @@ public class Spawner : MonoBehaviour
             x += Random.Range(-1.0f, 1.0f) * CAMERA_THICKNESS;
         }
 
-        Instantiate(basicEnemyPrefab, new Vector3(x, y, 0), Quaternion.identity);
+        float prob = Random.Range(0.0f, 1.0f);
+        if(prob < 0.25f)
+            Instantiate(splitEnemyPrefab, new Vector3(x, y, 0), Quaternion.identity);
+        else
+            Instantiate(basicEnemyPrefab, new Vector3(x, y, 0), Quaternion.identity);
     }
 }

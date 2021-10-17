@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Transform player;
-    [SerializeField] private CameraShaker camShake;
+    private Transform player;
+    private CameraShaker camShake;
     [SerializeField] private GameObject effectPrefab;
     [SerializeField] private float MAX_HEALTH;
     [SerializeField] private float KNOCKBACK_FRIC_COEFF;
@@ -11,20 +11,31 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float MAX_SPEED;
     [SerializeField] private float THRUST_CONST;
     [SerializeField] private float KNOCK_CONST;
-
+    [SerializeField] public float damage;
+    [SerializeField] private int POINTS;
+    [SerializeField] private AudioClip audioClip;
+    private AudioManager audioManager;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Vector2 knockbackVelocity;
     private Vector2 thrust;
     private float health;
 
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "Boma") {
+            Boma bomaScript = other.gameObject.GetComponent<Boma>();
+            this.health -= bomaScript.damage/Mathf.Pow(bomaScript.curr_Radius, 1.2f);
+            if (this.health < 0) { Boma.can_boma += POINTS; }
+        }
+    }
     void Start() {
         this.health = MAX_HEALTH;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         camShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShaker>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     void Update() {
@@ -57,9 +68,11 @@ public class Enemy : MonoBehaviour
     }
 
     void checkDeath() {
-        if(this.health < 0) {
+        if(this.health < 0) {            
             Destroy(gameObject);
             Instantiate(effectPrefab, transform.position, transform.rotation);
+            Score.SCORE += POINTS;
+            audioManager.playAudio(0, 0.69f);
             camShake.shakeCam();
         }
     }

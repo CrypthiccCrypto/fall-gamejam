@@ -14,6 +14,11 @@ public class Bullet : MonoBehaviour
             other.gameObject.GetComponent<Enemy>().hit(bullet_dir, damage);
             Destroy(gameObject);
         }
+        else if(other.gameObject.tag == "SplitEnemy") {
+            Instantiate(effectPrefab, transform.position, transform.rotation);
+            other.gameObject.GetComponent<SplitEnemy>().hit(bullet_dir, damage);
+            Destroy(gameObject);
+        }
     }
     void Update() {
         transform.position += bullet_dir * BULLET_SPEED * Time.deltaTime;
