@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PartiCool.unity
     guid: 2fc6f22f8900b6c469a0194c77bd3acc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameOver.unity
     guid: 7e52ab524a0391d4cba507659c448dff
   m_configObjects: {}

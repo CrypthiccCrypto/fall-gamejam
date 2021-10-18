@@ -9,7 +9,7 @@ TagManager:
   - SplitEnemy
   - Boma
   - AudioManager
-  - Replay
+  - Button
   layers:
   - Default
   - TransparentFX
