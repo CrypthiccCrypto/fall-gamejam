@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
             float damage_taken = other.gameObject.GetComponent<Enemy>().damage;
             direction *= KNOCKBACK * damage_taken;
-            rb.velocity += direction * Time.deltaTime;
+            rb.velocity += direction * Time.fixedDeltaTime;
             health -= damage_taken;
 
             StartCoroutine(invincibility());
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
             float damage_taken = other.gameObject.GetComponent<SplitEnemy>().damage;
             direction *= KNOCKBACK *damage_taken;
-            rb.velocity += direction * Time.deltaTime;
+            rb.velocity += direction * Time.fixedDeltaTime;
             health -= damage_taken;
             
             StartCoroutine(invincibility());

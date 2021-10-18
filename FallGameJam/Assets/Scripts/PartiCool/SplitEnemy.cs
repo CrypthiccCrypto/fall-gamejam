@@ -53,9 +53,12 @@ public class SplitEnemy : MonoBehaviour
     void Update() {
         checkPlayerDeath();
         checkDeath();
+        setColor();
+    }
+
+    void FixedUpdate() {
         aim();
         move();
-        setColor();
     }
 
     void checkPlayerDeath() {
@@ -69,8 +72,8 @@ public class SplitEnemy : MonoBehaviour
     }
 
     void move() {
-        rb.velocity += knockbackVelocity * Time.deltaTime;
-        rb.velocity += thrust * Time.deltaTime;
+        rb.velocity += knockbackVelocity * Time.fixedDeltaTime;
+        rb.velocity += thrust * Time.fixedDeltaTime;
         
         Mathf.Clamp(rb.velocity.magnitude, 0, MAX_SPEED);
         knockbackVelocity *= KNOCKBACK_FRIC_COEFF;
